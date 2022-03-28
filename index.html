@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作业七页面实现</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+
+<div id="app" >
+
+
+    <table v-show="show">
+        <tr  style="background-color: aquamarine; text-align: center">
+            <th class="text-left">id</th>
+            <th class="text-left">name</th>
+            <th class="text-left">标题</th>
+            <th class="text-left">图片</th>
+            <th class="text-left">价格</th>
+            <th class="text-left">库存</th>
+            <th class="text-left">详细信息</th>
+            <th class="text-left">删除操作</th>
+            <th class="text-left">修改操作</th>
+
+
+        </tr>
+
+        <tr v-for="item,index in productlist"  style="background-color: #ff7f50; text-align: center" >
+            <td>{{item.id}}    </td>
+            <td>{{item.name}}  </td>
+            <td>{{item.标题}}  </td>
+            <td><img v-bind:src="item.图片" style="width:60px;height:60px"></td>
+            <td>{{item.价格}}  </td>
+            <td>{{item.库存}}  </td>
+            <td>{{item.详细信息}} </td>
+            <td><button style="text-align: right;" @click="del(index)">删除</button> </td>
+            <td><button style="text-align: right;" @click="update(index)">修改</button> </td>
+
+
+
+        </tr>
+
+
+        <button @click="test()">显示/隐藏</button>
+    </table>
+    <form action="">
+        <br>
+        <input type="text" name="id" placeholder="id" v-model="obj.id"><br>
+        <input type="text" name="name" placeholder="name" v-model="obj.name"><br>
+        <input type="text" name="标题" placeholder="标题" v-model="obj.标题"><br>
+        <input type="text" name="图片" placeholder="图片" v-model="obj.图片"><br>
+        <input type="text" name="价格" placeholder="价格" v-model="obj.价格"><br>
+        <input type="text" name="库存" placeholder="库存" v-model="obj.库存"><br>
+        <input type="text" name="详细信息" placeholder="详细信息" v-model="obj.详细信息"><br>
+        <input type="button" value="数据更新" @click="add"><br>
+
+    </form>
+
+</div>
+
+</body>
+<script src="js/vue.js"></script>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data(){
+            return{
+                currentIndex:-1,
+                show:true,
+                productlist:[
+                    {
+                        id: 1,
+                        name: '高端香蕉',
+                        标题: '高端水果',
+                        图片: 'img/banana.jpg',
+                        价格: '￥15.50/kg',
+                        库存: '1000kg',
+                        详细信息: '高端香蕉 新鲜采摘 原装进口 '
+                    },
+                    {
+                        id: 2,
+                        name: '高端草莓',
+                        标题: '高端水果',
+                        图片: 'img/caomei.jpg',
+                        价格: '￥100.50/kg',
+                        库存: '5000kg',
+                        详细信息: '高端香蕉 新鲜采摘 原装进口 '
+                    },
+                    {
+                        id: 3,
+                        name: '高端柠檬',
+                        标题: '高端柠檬',
+                        图片: 'img/ningmeng.jpg',
+                        价格: '￥99.90/kg',
+                        库存: '8000kg',
+                        详细信息: '高端柠檬 新鲜采摘 原装进口'
+                    },
+                    {
+                        id: 4,
+                        name: '高端沃柑',
+                        标题: '高端水果',
+                        图片: 'img/wogan.jpg',
+                        价格: '￥59.90/kg',
+                        库存: '10000kg',
+                        详细信息: '高端沃柑 新鲜采摘 原装进口 '
+
+                    }],
+                obj:{
+                    id:0,
+                    name:"",
+                    标题:"",
+                    图片:'',
+                    价格:"",
+                    库存:"",
+                    详细信息:"",
+                }
+            }
+
+
+        },
+
+        methods:{
+            test: function () {
+                this.show = !this.show
+            },
+            add(){
+                if(this.obj.id<=0){
+                    this.productlist.push(this.obj);
+                    this.obj={};
+                }
+                else{
+                    this.productlist.splice(this.currentIndex,1,this.obj);
+                    this.obj={};
+                }
+                console.log(this.obj)
+
+            },
+            del(e){
+
+                this.productlist.splice(e,1);
+            },
+            update(e){
+
+                this.obj=this.productlist[e]
+                this.currentIndex=e;
+            }
+        }
+
+
+    });
+</script>
+</html>
